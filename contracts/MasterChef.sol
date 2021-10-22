@@ -111,7 +111,7 @@ contract MasterChef is Ownable {
         if (_withUpdate) {
             massUpdatePools();
         }
-        require(pooladdress[address(_lpToken)] == true, "this Pool has exist");
+        require(pooladdress[address(_lpToken)] == false, "this Pool has exist");
         uint256 lastRewardBlock = block.number > startBlock ? block.number : startBlock;
         totalAllocPoint = totalAllocPoint.add(_allocPoint);
         poolInfo.push(PoolInfo({
