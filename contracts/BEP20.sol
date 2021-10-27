@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.4.0;
+pragma solidity 0.6.12;
 
 import './Ownable.sol';
 import './Context.sol';

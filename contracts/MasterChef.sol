@@ -65,6 +65,7 @@ contract MasterChef is Ownable {
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event UpdateMultiplier(address indexed user, uint256 indexed number);
+    event SetMigrator(address indexed user, IMigratorChef _migrator);
 
    
     constructor(
@@ -73,6 +74,8 @@ contract MasterChef is Ownable {
         uint256 _cakePerBlock,
         uint256 _startBlock
     ) public {
+        require(address(_cake) != address(0), "_cake is zero address!");
+        require(address(_syrup) != address(0), "_syrup is zero address!");
         cake = _cake;
         syrup = _syrup;
         cakePerBlock = cakePerBlock;
@@ -91,6 +94,7 @@ contract MasterChef is Ownable {
     }
 
     function updateMultiplier(uint256 multiplierNumber) public onlyOwner {
+        require(multiplierNumber >= 1 && multiplierNumber <= 2, "number or multiplierNumber must be more then 1 and not much than 2")
         BONUS_MULTIPLIER = multiplierNumber;
         emit UpdateMultiplier(msg.sender, multiplierNumber);
     }
@@ -154,6 +158,7 @@ contract MasterChef is Ownable {
     function setMigrator(IMigratorChef _migrator) public onlyOwner {
         require(address(_migrator) != address(0), "_migrator is zero address!");
         migrator = _migrator;
+        emit SetMigrator(msg.sender, _migrator);
     }
 
     // Migrate lp token to another lp contract. Can be called by anyone. We trust that migrator contract is good.
@@ -318,6 +323,7 @@ contract MasterChef is Ownable {
 
     // Safe COINONE transfer function, just in case if rounding error causes pool to not have enough COINONEs.
     function safeCakeTransfer(address _to, uint256 _amount) internal {
+        require(_to != address(0), "_to is zero address!);
         syrup.safeCakeTransfer(_to, _amount);
     }
     
