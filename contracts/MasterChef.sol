@@ -94,7 +94,7 @@ contract MasterChef is Ownable {
     }
 
     function updateMultiplier(uint256 multiplierNumber) public onlyOwner {
-        require(multiplierNumber >= 1 && multiplierNumber <= 2, "number or multiplierNumber must be more then 1 and not much than 2")
+        require(multiplierNumber >= 1 && multiplierNumber <= 2, "number or multiplierNumber must be more then 1 and not much than 2");
         BONUS_MULTIPLIER = multiplierNumber;
         emit UpdateMultiplier(msg.sender, multiplierNumber);
     }
@@ -323,7 +323,7 @@ contract MasterChef is Ownable {
 
     // Safe COINONE transfer function, just in case if rounding error causes pool to not have enough COINONEs.
     function safeCakeTransfer(address _to, uint256 _amount) internal {
-        require(_to != address(0), "_to is zero address!);
+        require(_to != address(0), "_to is zero address!");
         syrup.safeCakeTransfer(_to, _amount);
     }
     
